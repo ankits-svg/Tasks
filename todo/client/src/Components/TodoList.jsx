@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 const TodoList = ({data},getdata) => {
     console.log("list:",data)
     
-    const [toggle,setToggle]=useState(null)
+    const [toggle,setToggle]=useState(false)
 
 
     const handleToggle=(id)=>{
@@ -32,6 +32,7 @@ const TodoList = ({data},getdata) => {
             }
         }).then(res=>res.json()).then(res=>{
             console.log(res.Data)
+            window.location.reload()
             getdata(data)
             // setData(res.Data)
             // setToggle(!res.Data.status)
