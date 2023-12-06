@@ -5,6 +5,8 @@ const Todo = () => {
     const [data,setData]=useState([])
   const [title, setTitle] = useState("");
   const [des,setDes]=useState("")
+  
+  
 
   const getdata=()=>{
     fetch("http://localhost:5000/app/read").then(res=>res.json()).then(res=>{
@@ -64,7 +66,7 @@ const Todo = () => {
       />
       <button onClick={handleAddtask}>Add Task</button>
     </div>
-    <TodoList data={data}/>
+    <TodoList data={data} getdata={getdata}/>
     </>
   );
 };
