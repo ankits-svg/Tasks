@@ -9,10 +9,10 @@ metRouter.post("/",async(req,res)=>{
     // const {digit,from,to}=req.body
     try {
         const met=new MetModel(req.body)
-        console.log("met:",met)
+        // console.log("met:",met)
+        await met.save()
         let final=convert(met.digit).from(met.from).to(met.to)
         res.send({"msg":"Data added succesfully","data":final})
-        // await met.save()
         // console.log("met:",met)
         
     } catch (error) {
