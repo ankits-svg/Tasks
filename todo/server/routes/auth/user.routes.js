@@ -16,10 +16,10 @@ userRouter.post("/signup",async(req,res)=>{
 })
 
 userRouter.post("/login",async(req,res)=>{
-    console.log(req.body)
-    const {email}=req.body;
+    // console.log(req.body)
+    const {email,password}=req.body;
     try {
-        const user=await UserModel.find({email})
+        const user=await UserModel.find({email:email,password:password})
         if(user.length===0){
             res.status(400).send({"msg":"No such user is present"})
         }else{
