@@ -13,14 +13,15 @@ const Login = () => {
             password:password
         }
     
-        fetch("http://localhost:5000/auth/login",{
+        if(obj.email!=="" && obj.password!==""){
+          fetch("http://localhost:5000/auth/login",{
             method:"POST",
             body:JSON.stringify(obj),
             headers:{
                 "Content-Type":"application/json"
             }
         }).then(res=>res.json()).then(res=>{
-            console.log(res)
+            // console.log(res)
             if(res.msg==="No such user is present"){
                 alert('No such user is present')
             }else if(res.msg==="Login Successfull"){
@@ -31,8 +32,13 @@ const Login = () => {
         }).catch(err=>{
             console.log(err)
         })
+        }else{
+          alert("Please fill the details for Login")
+        }
       }
   return (
+    <>
+    <h1>Login Page</h1>
     <div>
       Email:{" "}
       <input
@@ -52,6 +58,7 @@ const Login = () => {
         Login
       </button>
     </div>
+    </>
   )
 }
 

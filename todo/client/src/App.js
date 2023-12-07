@@ -5,7 +5,7 @@ import MainRoutes from './Components/MainRoutes';
 function App() {
   return (
     <div className="App">
-      <h1>Todo Applications</h1>
+      {/* <h1>Todo Applications</h1> */}
       <MainRoutes/>
     </div>
   );

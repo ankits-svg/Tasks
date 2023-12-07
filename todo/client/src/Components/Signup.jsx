@@ -14,21 +14,27 @@ const Signup = () => {
         company:company
     }
 
-    fetch("http://localhost:5000/auth/signup",{
+    if(obj.email!=="" && obj.password!=="" && obj.company!==""){
+      fetch("http://localhost:5000/auth/signup",{
         method:"POST",
         body:JSON.stringify(obj),
         headers:{
             "Content-Type":"application/json"
         }
     }).then(res=>res.json()).then(res=>{
-        console.log(res)
+        // console.log(res)
         alert("Registeration Successfull")
         navigate("/login")
     }).catch(err=>{
         console.log(err)
     })
+    }else{
+      alert("Please fill the detail for signup")
+    }
   }
   return (
+    <>
+    <h1>Register Here</h1>
     <div>
       Email:{" "}
       <input
@@ -55,6 +61,7 @@ const Signup = () => {
         SignUp
       </button>
     </div>
+    </>
   );
 };
 

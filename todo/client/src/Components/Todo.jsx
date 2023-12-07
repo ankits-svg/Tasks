@@ -10,7 +10,7 @@ const Todo = () => {
 
   const getdata=()=>{
     fetch("http://localhost:5000/app/read").then(res=>res.json()).then(res=>{
-        console.log(res)
+        // console.log(res)
         setData(res.Data)
     }).catch(err=>{
         console.log(err)
@@ -24,7 +24,7 @@ const Todo = () => {
     const obj={
         title:title,
         des:des,
-        status:true
+        status:false
     }
     if(obj.title!=="" && obj.des!==""){
         fetch("http://localhost:5000/app/add",{
@@ -34,7 +34,7 @@ const Todo = () => {
             "Content-Type":"application/json"
         }
     }).then(res=>res.json()).then(res=>{
-        console.log(res)
+        // console.log(res)
         setData(res.Data)
         getdata(data)
         setTitle('')
@@ -48,6 +48,8 @@ const Todo = () => {
     }
   }
   return (
+    <>
+    <h1>Todo Applications</h1>
     <>
     <div>
       Title:<input
@@ -67,6 +69,7 @@ const Todo = () => {
       <button onClick={handleAddtask}>Add Task</button>
     </div>
     <TodoList data={data} getdata={getdata}/>
+    </>
     </>
   );
 };
