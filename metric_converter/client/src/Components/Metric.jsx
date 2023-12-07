@@ -25,7 +25,7 @@ const Metric = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res.msg);
+        // console.log(res.msg);
         let newvalue = `${res.data} ${to}`;
         setAns(newvalue);
         setDigit(0);
