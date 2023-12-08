@@ -14,16 +14,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 
-/*
-{
-    "studentId":"fw20_0222",
-    "certtype":"Completion",
-    "body":"Python Programming",
-    "name":"Ankesh Kumar",
-    "cofounder":"charan",
-    "founder":"karun"
-}
-*/
+
 const Certificate = () => {
   const [name, setName] = useState("");
   const [studentId, SetStudentId] = useState("");
