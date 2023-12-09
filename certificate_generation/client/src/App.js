@@ -5,7 +5,7 @@ import Certificate from './Components/Certificate';
 function App() {
   return (
     <div className="App">
-      <h1>Certificate Generator</h1>
+      {/* <h1>Certificate Generator</h1> */}
       <Certificate/>
     </div>
   );
