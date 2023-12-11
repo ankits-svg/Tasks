@@ -97,9 +97,29 @@ const Certificate = () => {
             duration: 9000,
             isClosable: true,
           });
+        // Share the PDF using the navigator.share API
+        if (navigator.share) {
+          const shareData = {
+            title: `${name}_Certificate`,
+            text: `Check out my certificate: ${name}_${body}_Certificate.pdf`,
+            files: [blob],
+          };
+
+          try {
+            await navigator.share(shareData);
+            console.log('Shared successfully');
+          } catch (error) {
+            console.error('Error sharing:', error);
+          }
+        } else {
+          console.warn('Sharing not supported on this device/browser.');
+        }
+          
         } else {
           console.error("Error generating certificate:", response.statusText);
         }
+
+        
       } catch (error) {
         console.error("Error:", error);
       }
