@@ -43,10 +43,13 @@ const Basic = () => {
           body: JSON.stringify({ name, course, linkedin }),
         }
       );
-
+      // const res=response.json()
+      // console.log("res:",res)
       const pdfBuffer = await response.arrayBuffer();
       const blob = new Blob([pdfBuffer], { type: "application/pdf" });
+        // console.log("res:",blob)
       const url = URL.createObjectURL(blob);
+      console.log("url:",url)
       setPdfUrl(url);
         setTimeout(()=>{
             

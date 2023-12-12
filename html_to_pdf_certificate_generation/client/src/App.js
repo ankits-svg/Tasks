@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import { ChakraProvider, Box, IconButton, Heading, Input, Button, Text, InputGroup, InputRightElement } from "@chakra-ui/react";
 import "./App.css";
-// import Pdf from "./Components/Pdf";
-import Mainroutes from "./Components/Mainroutes";
+import { FaTwitter, FaLinkedin } from "react-icons/fa";
 
 function App() {
   const [name, setName] = useState("");
@@ -11,24 +11,34 @@ function App() {
   const [copy, setCopy] = useState("");
 
   const generateCertificate = async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:2100/api/generateCertificate",
-        {
+
+    let obj={
+      name:name,
+      course:course,
+      founder:founder
+    }
+    if(obj.name!=="" || obj.course!=="" || obj.founder!==""){
+      try {
+        const response = await fetch("http://localhost:2100/api/generateCertificate", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ name, course, founder }),
-        }
-      );
-
-      const pdfBuffer = await response.arrayBuffer();
-      const blob = new Blob([pdfBuffer], { type: "application/pdf" });
-      const url = URL.createObjectURL(blob);
-      setPdfUrl(url);
-    } catch (error) {
-      console.error("Error generating certificate:", error);
+        });
+  
+        const pdfBuffer = await response.arrayBuffer();
+        const blob = new Blob([pdfBuffer], { type: "application/pdf" });
+        const url = URL.createObjectURL(blob);
+        setPdfUrl(url);
+        setName("")
+        setCourse("")
+        // setFounder("")
+      } catch (error) {
+        console.error("Error generating certificate:", error);
+      }
+    }else{
+      alert('Please fill the details')
     }
   };
 
@@ -40,94 +50,112 @@ function App() {
       setCopy("Copied!");
     }
   };
+  const isDisabled = !name || !course || !founder;
 
   return (
-    <div>
-      <Mainroutes/>
-    </div>
-  )
-  // return (
+    <ChakraProvider>
+      <Box className="App" textAlign="center" p={8}>
+        <Heading as="h1" size="xl" mb={4}>
+          Certificate Generator
+        </Heading>
+        <Box mb={4}>
+          <InputGroup>
+            <Input
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </InputGroup>
+        </Box>
+        <Box mb={4}>
+          <InputGroup>
+            <Input
+              placeholder="Course"
+              value={course}
+              onChange={(e) => setCourse(e.target.value)}
+            />
+          </InputGroup>
+        </Box>
+        <Box mb={4}>
+          <InputGroup>
+            <Input
+              placeholder="Linkedin Username"
+              value={founder}
+              onChange={(e) => setFounder(e.target.value)}
+            />
+          </InputGroup>
+        </Box>
+        <Button colorScheme="teal" size="md" mb={4} onClick={generateCertificate} isDisabled={isDisabled}>
+          Generate Certificate
+        </Button>
 
-  //   <div className="App">
-  //     <h1>Certificate Generator</h1>
-  //     <div>
-  //       <label>Name:</label>
-  //       <input
-  //         type="text"
-  //         value={name}
-  //         onChange={(e) => setName(e.target.value)}
-  //       />
-  //     </div>
-  //     <div>
-  //       <label>Course:</label>
-  //       <input
-  //         type="text"
-  //         value={course}
-  //         onChange={(e) => setCourse(e.target.value)}
-  //       />
-  //     </div>
-  //     <div>
-  //       <label>Linkedin Username:</label>
-  //       <input
-  //         type="text"
-  //         value={founder}
-  //         onChange={(e) => setFounder(e.target.value)}
-  //       />
-  //     </div>
-  //     <button onClick={generateCertificate}>Generate Certificate</button>
-
-  //     {pdfUrl && (
-  //       <div>
-  //         <h2>Generated Certificate Url:</h2>
-  //         <div>
-  //           <input
-  //             id="pdfUrlInput"
-  //             type="url"
-  //             value={pdfUrl}
-  //             readOnly
-  //             onClick={(e) => e.target.select()}
-  //           />
-  //           <button onClick={handleCopy}>Copy Url</button>
-  //           <p>{copy}</p>
-
-  //           {/* Share buttons */}
-  //           <div>
-  //             <h3>Share Certificate:</h3>
-  //             <button
-  //               onClick={() =>
-  //                 window.open(
-  //                   `https://twitter.com/intent/tweet?url=${pdfUrl}&text=Check out my certificate`
-  //                 )
-  //               }
-  //             >
-  //               Share on Twitter
-  //             </button>
-  //             <button
-  //               onClick={() =>
-  //                 window.open(
-  //                   `https://www.linkedin.com/in/${founder}/edit/forms/certification/new/?profileFormEntryPoint=PROFILE_COMPLETION_HUB`
-  //                 )
-  //               }
-  //             >
-  //               Share on LinkedIn
-  //             </button>
-  //           </div>
-  //         </div>
-  //       </div>
-  //     )}
-  //     {pdfUrl && (
-  //       <div>
-  //         <iframe
-  //           title="Generated Certificate"
-  //           src={pdfUrl}
-  //           frameBorder="-1"
-  //           style={{ border: "none", width: "80%", height: "135vh", overflow: 'hidden' }}
-  //         ></iframe>
-  //       </div>
-  //     )}
-  //   </div>
-  
-  // );
+        {pdfUrl && (
+          <Box>
+            <Heading as="h2" size="lg" mb={4}>
+              Generated Certificate Url:
+            </Heading>
+            <Box>
+              <InputGroup>
+                <Input
+                  id="pdfUrlInput"
+                  type="url"
+                  value={pdfUrl}
+                  readOnly
+                  onClick={(e) => e.target.select()}
+                />
+                <InputRightElement width="4.5rem">
+                  <Button h="1.75rem" size="sm" onClick={handleCopy}>
+                    Copy
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+              <Text color="green.500" mt={2}>
+                {copy}
+              </Text>
+            </Box>
+            <Box mt={4}>
+  {/* Share buttons */}
+  <Heading as="h3" size="md">
+    Share Certificate:
+  </Heading>
+  <IconButton
+    colorScheme="twitter"
+    size="md"
+    aria-label="Share on Twitter"
+    icon={<FaTwitter />}
+    onClick={() =>
+      window.open(`https://twitter.com/intent/tweet?url=${pdfUrl}&text=Check out my certificate`)
+    }
+    borderRadius="full" // Makes the button circular
+    mr={2} // Add some margin to separate buttons
+  />
+  <IconButton
+    colorScheme="linkedin"
+    size="md"
+    aria-label="Share on LinkedIn"
+    icon={<FaLinkedin />}
+    onClick={() =>
+      window.open(`https://www.linkedin.com/in/${founder}/edit/forms/certification/new/?profileFormEntryPoint=PROFILE_COMPLETION_HUB`)
+    }
+    borderRadius="full" // Makes the button circular
+  />
+</Box>
+          </Box>
+        )}
+        {pdfUrl && (
+          <Box>
+            <iframe
+              title="Generated Certificate"
+              src={pdfUrl}
+              frameBorder="0"
+              style={{ border: "none", width: "80%", height: "125vh", overflow: 'hidden',margin:"auto", marginTop:"20px" }}
+            ></iframe>
+            {/* <Embed src={pdfUrl} width="80%" height="600px" /> */}
+          </Box>
+        )}
+      </Box>
+    </ChakraProvider>
+  );
 }
 
 export default App;
