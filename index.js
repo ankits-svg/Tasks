@@ -230,3 +230,18 @@ app.listen(port, async () => {
   }
   console.log(`Server is running at ${port}`);
 });
+
+
+/*
+// "name": "server",
+  // "version": "1.0.0",
+  // "description": "",
+  // "main": "index.js",
+  // "scripts": {
+  //   "server": "nodemon index.js",
+  //   "test": "echo \"Error: no test specified\" && exit 1"
+  // },
+  // "keywords": [],
+  // "author": "",
+  // "license": "ISC",
+*/
