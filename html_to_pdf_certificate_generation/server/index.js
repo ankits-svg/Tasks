@@ -1,5 +1,6 @@
 const express = require("express");
 const { connection } = require("./config/db");
+const path=require("path")
 const app = express();
 const cors=require("cors")
 // const image=require("./assets/")
@@ -7,15 +8,20 @@ const htmlToPdf = require("html-pdf-node");
 const { HtmlModel } = require("./models/html.models");
 require("dotenv").config();
 port = process.env.port || 2200;
-
+app.use('../assets',express.static(path.join(__dirname,'assets')))
+// app.use('./assets',express.static("assets"))
 app.use(cors())
 app.use(express.json());
 
+// Serve static files from the assets folder
+// app.use("/assets", express.static(path.join(__dirname, "assets")));
 
-app.get("/", async(req, res) => {
+app.get("/:id", async(req, res) => {
   console.log("req",req.params)
+  const {id}=req.params;
   try {
-    const certificate=await HtmlModel.find()
+    const certificate=await HtmlModel.find({_id:id})
+    console.log("certificate:",certificate)
     res.send({ msg: "getting the result","data":certificate });
   } catch (error) {
     res.send({"msg":"Some error in getting"})
@@ -25,7 +31,7 @@ app.get("/", async(req, res) => {
 // API endpoint to generate and save a certificate
 app.post("/api/generateCertificate", async (req, res) => {
   const { name, course, linkedin } = req.body;
-    const image="assets/logo.png"
+  const image = "/assets/logo.png";
   // HTML content for the certificate
   const htmlContent = `
   <!DOCTYPE html>
@@ -52,9 +58,11 @@ app.post("/api/generateCertificate", async (req, res) => {
               position: relative;
               background-color: #fff;
               box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-              border-block-style: dotted; /* Specify the border style for the vertical direction */
-              border-inline-style: dotted; /* Specify the border style for the horizontal direction */
-              writing-mode: horizontal-tb;  /* Specify the writing mode */
+              border: 20px solid transparent;
+              /* border-image: url('your-border-image-url.png') 20 round; Add your border image URL and adjust the values as needed */
+              border-image:linear-gradient(#1da1f2,#f26e1c) 50;
+              border-radius: 20px;
+              writing-mode: horizontal-tb; 
           }
   
           .content {
@@ -123,13 +131,29 @@ app.post("/api/generateCertificate", async (req, res) => {
               margin-top: 70px;
               font-size: 14px;
           }
+          .byte {
+            color: #1DA1F2;
+            font-size: 70px;
+        }
+
+        .xl {
+            color: #F26E1C;
+            font-size: 40px;
+            margin-top: -10px;
+        }
+        .date{
+          color: #1DA1F2;
+        }
+        h4{
+          color: #F26E1C;
+        }
       </style>
   </head>
   
   <body>
       <div class="certificate">
           <div class="content">
-              <img src="/assetes/logo.png" alt="Company Logo" class="logo" />
+              <h1><span class="byte">byte</span><sup class="xl">XL</sup></h1>
               <div class="title">CERTIFICATE</div>
               <div class="certify-text">&#8277; &#8277; &#8277; This is to certify &#8277; &#8277; &#8277;</div>
               <div class="name">${name}</div>
@@ -140,11 +164,11 @@ app.post("/api/generateCertificate", async (req, res) => {
               <div class="programming-language">${course}</div>
               <div class="footer">
                   <div>
-                      <div class="underline1">${new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}</div>
+                      <div class="underline1"><strong class="date">${new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}</strong></div>
                       <h4>Date</h4>
                   </div>
                   <div>
-                      <div class="underline1">Karun Tadepalli</div>
+                      <div class="underline1"><strong class="date">Karun Tadepalli</strong></div>
                       <h4>CEO & Co-founder</h4>
                   </div>
               </div>
@@ -182,7 +206,7 @@ app.post("/api/generateCertificate", async (req, res) => {
     // Save certificate details to MongoDB (Make sure you have defined Certificate model)
     const certificate = new HtmlModel({ name, course, linkedin });
     await certificate.save();
-
+      console.log("certserver:",certificate)
     // Respond with the PDF buffer
     res.contentType("application/pdf");
     res.send(pdfBuffer);
