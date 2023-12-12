@@ -1,20 +1,17 @@
 {
   
   
-    "name": "mern-deploy",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-      "install-server": "cd server && npm install",
-      "start-server": "cd server && node index.js",
-      "install-client": "cd client && npm install",
-      "build-client": "cd client && npm run build",
-      "start-client": "cd client && npm run start"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
+    "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
