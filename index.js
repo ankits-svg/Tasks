@@ -3,18 +3,15 @@ const { connection } = require("./config/db");
 const path=require("path")
 const app = express();
 const cors=require("cors")
-// const image=require("./assets/")
 const htmlToPdf = require("html-pdf-node");
 const { HtmlModel } = require("./models/html.models");
 require("dotenv").config();
 port = process.env.port || 2200;
-app.use('../assets',express.static(path.join(__dirname,'assets')))
-// app.use('./assets',express.static("assets"))
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use(cors())
 app.use(express.json());
 
-// Serve static files from the assets folder
-// app.use("/assets", express.static(path.join(__dirname, "assets")));
+
 
 app.get("/:id", async(req, res) => {
   console.log("req",req.params)
@@ -30,7 +27,7 @@ app.get("/:id", async(req, res) => {
 
 // API endpoint to generate and save a certificate
 app.post("/api/generateCertificate", async (req, res) => {
-  const { name, course, linkedin } = req.body;
+  const { name, course,type, linkedin } = req.body;
   const image = "/assets/logo.png";
   // HTML content for the certificate
   const htmlContent = `
@@ -78,12 +75,12 @@ app.post("/api/generateCertificate", async (req, res) => {
           }
   
           .title {
-              text-align: center;
-              font-weight: bold;
-              margin-top: 20px;
-              font-size: 54px;
-              color: #f26e1c;
-          }
+            text-align: center;
+            font-weight: bold;
+            margin-top: 20px;
+            font-size: 34px;
+            color: #f26e1c;
+        }
   
           .certify-text {
               margin-top: 20px;
@@ -133,12 +130,12 @@ app.post("/api/generateCertificate", async (req, res) => {
           }
           .byte {
             color: #1DA1F2;
-            font-size: 70px;
+            font-size: 40px;
         }
 
         .xl {
             color: #F26E1C;
-            font-size: 40px;
+            font-size: 30px;
             margin-top: -10px;
         }
         .date{
@@ -147,31 +144,41 @@ app.post("/api/generateCertificate", async (req, res) => {
         h4{
           color: #F26E1C;
         }
+        h1 {
+          position: absolute;
+          top: 10px; /* Adjust the top position as needed */
+          font-size: 20px;
+      }
+
+      h1.top-right {
+          right: 10px; /* Adjust the right position as needed */
+      }
       </style>
   </head>
   
   <body>
       <div class="certificate">
           <div class="content">
-              <h1><span class="byte">byte</span><sup class="xl">XL</sup></h1>
+              <h1 class="top-right"><span class="byte">byte</span><sup class="xl">XL</sup></h1>
               <div class="title">CERTIFICATE</div>
-              <div class="certify-text">&#8277; &#8277; &#8277; This is to certify &#8277; &#8277; &#8277;</div>
+              <div class="title">OF ${type}</div>
+              <div class="certify-text">&#8277; &#8277; &#8277; This is to certify that &#8277; &#8277; &#8277;</div>
               <div class="name">${name}</div>
               <div class="underline"></div>
               <div class="assessment-text">
-                  has successfully cleared the assessment for the skill
+              has demonstrated exceptional proficiency and mastery in the field of
               </div>
               <div class="programming-language">${course}</div>
               <div class="footer">
                   <div>
                       <div class="underline1"><strong class="date">${new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}</strong></div>
-                      <h4>Date</h4>
+                      <h4>Date of Achievement</h4>
                   </div>
                   <div>
                       <div class="underline1"><strong class="date">Karun Tadepalli</strong></div>
                       <h4>CEO & Co-founder</h4>
                   </div>
-              </div>
+              </div>  
           </div>
       </div>
   </body>
@@ -187,24 +194,14 @@ app.post("/api/generateCertificate", async (req, res) => {
   };
 
   try {
-    //   // Generate PDF from HTML content
-    //   const pdfBuffer = await htmlToPdf.generatePdf({ content: htmlContent }, options);
-
-    //   // Save certificate details to MongoDB
-    //   const certificate = new Certificate({ name, course, founder });
-    //   await certificate.save();
-
-    //   // Respond with the PDF buffer
-    //   res.send(pdfBuffer);
-
-    // Generate PDF from HTML content
+    
     const pdfBuffer = await htmlToPdf.generatePdf(
       { content: htmlContent },
       options
     );
 
     // Save certificate details to MongoDB (Make sure you have defined Certificate model)
-    const certificate = new HtmlModel({ name, course, linkedin });
+    const certificate = new HtmlModel({ name, course,type,linkedin });
     await certificate.save();
       console.log("certserver:",certificate)
     // Respond with the PDF buffer
@@ -231,17 +228,3 @@ app.listen(port, async () => {
   console.log(`Server is running at ${port}`);
 });
 
-
-/*
-// "name": "server",
-  // "version": "1.0.0",
-  // "description": "",
-  // "main": "index.js",
-  // "scripts": {
-  //   "server": "nodemon index.js",
-  //   "test": "echo \"Error: no test specified\" && exit 1"
-  // },
-  // "keywords": [],
-  // "author": "",
-  // "license": "ISC",
-*/

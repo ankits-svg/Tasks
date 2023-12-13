@@ -1,14 +1,15 @@
 const mongoose=require("mongoose")
 
-const htmlSchema=mongoose.Schema({
+const pSchema=mongoose.Schema({
     name: String,
     course: String,
+    type:String,
     date: { type: Date, default: Date.now },
     linkedin: String,
 
 })
 
-const HtmlModel=mongoose.model("html",htmlSchema)
+const HtmlModel=mongoose.model("p",pSchema)
 
 module.exports={
     HtmlModel
