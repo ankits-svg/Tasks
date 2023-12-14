@@ -101,11 +101,7 @@ app.post("/api/generateCertificate", async (req, res) => {
               margin: 10px auto;
           }
   
-          .underline1 {
-              width: 100%;
-              border-bottom: 2px solid #000;
-              margin: 10px auto;
-          }
+          
   
           .assessment-text {
               text-align: center;
