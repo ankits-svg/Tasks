@@ -43,7 +43,6 @@ app.post("/api/generateCertificate", async (req, res) => {
     />
   </head>
   <style>
-    
     body {
       margin: 0;
       padding: 0;
@@ -52,107 +51,41 @@ app.post("/api/generateCertificate", async (req, res) => {
       align-items: center;
       min-height: 100vh;
     }
-
-
     .container {
-      
-      box-shadow:rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        box-shadow:rgba(0, 0, 0, 0.16) 0px 1px 4px;
       display: flex;
-      width: 297mm; 
-      height: 180mm; 
+      width: 297mm;
       max-width: 100%;
-      max-height: 100%;
-     
+      max-height: 120%;
     }
-
   .left-div {
-    width: 23.5%;
-    padding: 20px;
+    width: 100%;
     position: relative;
     overflow: hidden;
-    background-image: url("https://i.ibb.co/dWHTWQP/bytexl-certificate-base-background.png");
-    background-size: cover;
 }
-
-.left-div::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 10%;
-    height: 10%;
-    background: 
-        repeating-linear-gradient(
-            40deg, 
-            transparent, 
-            transparent 5px, 
-            #f26e1c 5px, 
-            #f26e1c 10px
-        ),
-        radial-gradient(circle at 10% 20%, #1da1f2 20%, transparent 25%),
-        radial-gradient(circle at 20% 60%, #1da1f2 20%, transparent 25%),
-        repeating-linear-gradient(
-            45deg,
-            transparent,
-            transparent 10px,
-            #f26e1c 10px,
-            #f26e1c 20px
-        ),
-        repeating-linear-gradient(
-            -45deg,
-            transparent,
-            transparent 10px,
-            #1da1f2 10px,
-            #1da1f2 20px
-        ),
-        repeating-linear-gradient(
-            90deg,
-            transparent,
-            transparent 20px,
-            #1da1f2 20px,
-            #1da1f2 30px
-        ),
-        repeating-linear-gradient(
-            -90deg,
-            transparent,
-            transparent 20px,
-            #f26e1c 20px,
-            #f26e1c 30px
-        ),
-        radial-gradient(circle at 80% 80%, #f26e1c 30%, transparent 40%),
-        radial-gradient(circle at 60% 40%, #1da1f2 30%, transparent 40%),
-        repeating-linear-gradient(
-            -30deg,
-            transparent,
-            transparent 20px,
-            #1da1f2 20px,
-            #1da1f2 30px
-        );
-    clip-path: polygon(0 0, 100% 0, 70% 100%, 0% 100%);
-    z-index: -1;
-} 
 
     .right-div {
       flex: 1;
-      background-color: #ffffff;
+      position: relative;
+      
+      right: 10%;
+      background-color: #FFFFFF;
       padding: 20px;
-      box-sizing: border-box; 
-      text-align: center; 
-      position: relative; 
+      box-sizing: border-box;
+      text-align: center;
+     
     }
-
     h1.top-right {
       position: absolute;
       top: 10px;
       right: 10px;
       font-size: 20px;
     }
-
     .title {
       font-weight: bold;
       margin-top: 20px;
       font-size: 164px;
-      color: #1da1f2;
+      color: #1DA1F2;
       font-family: "Beau Rivage", cursive;
       font-family: "Carattere", cursive;
       font-family: "Cedarville Cursive", cursive;
@@ -166,17 +99,15 @@ app.post("/api/generateCertificate", async (req, res) => {
       margin-top: -20px;
       margin-left: 30%;
       font-size: 24px;
-      color: #f26e1c;
+      color: #F26E1C;
     }
-
     .certify-text {
       margin-top: 7%;
       font-size: 28px;
     }
-
     .name {
       font-size: 56px;
-      color: #f26e1c;
+      color: #F26E1C;
       margin-top: 30px;
       font-family: "Beau Rivage", cursive;
       font-family: "Carattere", cursive;
@@ -186,30 +117,26 @@ app.post("/api/generateCertificate", async (req, res) => {
       font-family: "Playball", cursive;
       font-family: "Tangerine", cursive;
     }
-
     .underline {
       width: 75%;
       border-bottom: 2px solid #000;
       margin: 10px auto;
     }
-
     .underline1 {
       width: 100%;
       border-bottom: 2px solid #000;
       margin: 10px auto;
     }
-
     .assessment-text {
       font-size: 30px;
       margin-top: 10px;
       color: black;
     }
-
     .programming-language {
       font-weight: bold;
       margin-top: 10px;
       font-size: 44px;
-      color: #f26e1c;
+      color: #F26E1C;
       font-family: "Beau Rivage", cursive;
       font-family: "Carattere", cursive;
       font-family: "Cedarville Cursive", cursive;
@@ -218,57 +145,63 @@ app.post("/api/generateCertificate", async (req, res) => {
       font-family: "Playball", cursive;
       font-family: "Tangerine", cursive;
     }
-
     .footer {
       display: flex;
       justify-content: space-around;
       margin-top: 40px;
       font-size: 14px;
     }
-
     .byte {
-      color: #1da1f2;
+      color: #1DA1F2;
       font-size: 40px;
     }
-
     .xl {
-      color: #f26e1c;
+      color: #F26E1C;
       font-size: 30px;
       margin-top: -10px;
     }
-
     h4 {
-      color: #f26e1c;
+      color: #F26E1C;
+    }
+    .image{
+        min-height: 120%;
+      position: relative;
+      right:  5%;
+      bottom: 10%;
+        width: 170%;
     }
   </style>
   <body>
     <div class="container">
       <div class="left-div">
+        <img class="image" src="https://ankit-123.my.canva.site/sa/images/d848d22c8df4e2d1fb90c190dcdcd2d8.png" alt="logo">
       </div>
-
       <div class="right-div">
-        <!-- Content for the right div (70%) -->
+       
         <h1 class="top-right">
           <span class="byte">byte</span><sup class="xl">XL</sup>
         </h1>
         <div class="title">Certificate</div>
-        <!-- <IMg></IMg> -->
-        <div class="title1">OF {type}</div>
+        
+        <div class="title1">OF ${type}</div>
         <div class="certify-text">
           &#8277; &#8277; &#8277; This is to certify that &#8277; &#8277;
           &#8277;
         </div>
-        <div class="name">Ankit Sharma</div>
+        <div class="name">${name}</div>
         <div class="underline"></div>
         <div class="assessment-text">
           has successfully cleared the assessment for the skill
         </div>
-        <div class="programming-language">{course}</div>
+        <div class="programming-language">${course}</div>
         <div class="footer">
-          <div>
-            <div class="underline1">24 Oct 2023</div>
-            <h4>Date</h4>
-          </div>
+            <div>
+                <div class="underline1"><strong class="date">${new Date().toLocaleDateString(
+                  "en-US",
+                  { day: "numeric", month: "short", year: "numeric" }
+                )}</strong></div>
+                <h4>Date of Achievement</h4>
+            </div>
           <div>
             <div class="underline1">Karun Tadepalli</div>
             <h4>CEO & Co-founder</h4>
@@ -293,7 +226,7 @@ app.post("/api/generateCertificate", async (req, res) => {
 
     const certificate = new HtmlModel({ name, course, type, linkedin });
     await certificate.save();
-    console.log("certserver:", certificate);
+    // console.log("certserver:", certificate);
     res.contentType("application/pdf");
     res.send(pdfBuffer);
   } catch (error) {
