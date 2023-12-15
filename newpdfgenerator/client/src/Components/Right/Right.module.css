@@ -1,0 +1,56 @@
+/* Certificate.css */
+
+/* ... (previous styles) */
+
+.sharesection {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .sharesection button {
+    background-color: #1da1f2;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 0 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .copylinksection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .copylinksection input {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .copylinksection button {
+    background-color: #1da1f2;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin-left: 10px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .titlesection {
+    text-align: center;
+    font-size: 30px;
+    margin-top: 20px;
+    color: #f26e1c;
+  }
+  
+  .bodysection {
+    text-align: justify;
+    margin-top: 20px;
+  }
+  
+  /* ... (previous styles) */
+  
